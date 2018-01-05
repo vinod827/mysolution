@@ -1,1 +1,1 @@
-Place your tests here please.
+UfoSightingServiceImplTest.java

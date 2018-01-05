@@ -17,14 +17,13 @@ import ufo.service.UfoSightingService;
 import ufo.util.CsvFileReader;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class UfoSightingServiceImpl implements UfoSightingService {
-    protected static Logger logger = Logger.getLogger("UfoSightingServiceImpl");
+    private static Logger logger = Logger.getLogger("UfoSightingServiceImpl");
     private static String cvsSplitBy = "\t";
 
     public List<UfoSighting> getAllSightings() {
@@ -50,8 +49,6 @@ public class UfoSightingServiceImpl implements UfoSightingService {
                     ufoSightingList.add(ufoSighting);
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -97,9 +94,6 @@ public class UfoSightingServiceImpl implements UfoSightingService {
                     patternMatched = false;
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
         } catch (IOException e) {
             e.printStackTrace();
 
