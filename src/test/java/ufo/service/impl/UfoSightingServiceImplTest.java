@@ -28,21 +28,19 @@ import static org.junit.Assert.assertNotNull;
 public class UfoSightingServiceImplTest {
     private UfoSightingService ufoSightingService;
     private CsvFileReader csvFileReader;
-    private UfoSighting ufoSighting;
     private TestDataHelper testDataHelper;
 
     @Before
     public void setUp() throws Exception {
         ufoSightingService = Mockito.mock(UfoSightingServiceImpl.class);
         csvFileReader = Mockito.mock(CsvFileReader.class);
-        ufoSighting = Mockito.mock(UfoSighting.class);
         testDataHelper = new TestDataHelper();
     }
 
     @Test
     public void testGetAllSightings(){
         //Given
-        List<UfoSighting> ufoSightingList = testDataHelper.getSightings();
+        List<UfoSighting> ufoSightingList = testDataHelper.getSightingsList();
 
         //When
         Mockito.when(ufoSightingService.getAllSightings()).thenReturn(ufoSightingList);
@@ -52,9 +50,9 @@ public class UfoSightingServiceImplTest {
     }
 
     @Test
-    public void testSearchSightingsWhenYearAndMonthIsGivenAsInput(){
+    public void testSearchSightings_WhenYearAndMonthIsGivenAsInput(){
         //Given
-        List<UfoSighting> ufoSightingList = testDataHelper.getSightings();
+        List<UfoSighting> ufoSightingList = testDataHelper.getSightingsList();
         int yearSeen = 2018;
         int monthSeen = 01;
 

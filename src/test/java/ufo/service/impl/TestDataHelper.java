@@ -21,7 +21,7 @@ public class TestDataHelper {
      * @author: Vinod Kumar Nair (Wipro)
      * @return
      */
-    public List<UfoSighting> getSightings(){
+    public List<UfoSighting> getSightingsList(){
         List<UfoSighting> testSightingsData = new ArrayList<UfoSighting>();
         UfoSighting ufoSighting = null;
         //Test Data 1 for UFO Sightings
@@ -44,5 +44,18 @@ public class TestDataHelper {
         ufoSighting = new UfoSighting(dateSeen, dateReported, placeSeen, shape, duration, description);
         testSightingsData.add(ufoSighting);
         return testSightingsData;
+    }
+
+    public UfoSighting getSightingObj(){
+        UfoSighting ufoSighting = null;
+        //Test Data 1 for UFO Sightings
+        String dateSeen = "20180101";
+        String dateReported = "20180101";
+        String placeSeen = "London";
+        String shape = " Test shape 1";
+        String duration = " Test duration 1";
+        String description = "This is a test data 1";
+        ufoSighting = new UfoSighting(dateSeen, dateReported, placeSeen, shape, duration, description);
+        return ufoSighting;
     }
 }
