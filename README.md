@@ -1,3 +1,11 @@
+UfoSightingServiceImplTest.java is the main entry test class which will be used to test the implementation of following logic:-
+(a) Get all sightings result from given csv file
+(b) Get specific sightings result based on given inputs as Year & Month
+
+Use the following maven command to execute this program:-
+mvn clean install -X
+
+
 # UFO Sightings Service
 
 We have a huge TSV file (included in the project resources folder) and we need to consume the information inside it.
