@@ -1,65 +1,67 @@
 /**
  * FILE		    :	UFO Sightings
  * Author		:	Vinod Kumar Nair (WIPRO)
- * Purpose	    :	This is a JUnit Test to test the following logic for UfoSightings App:-
+ * Purpose	    :	This is a main entry Test class which will be used to test the following implementation methods of UfoSightings :-
  *                    (a) Get all sightings result from given csv file
  *                    (b) Get specific sightings result based on given inputs as Year & Month
- * Date Created :	05-01-2018
+ * Date Created :	14-01-2018
  *
  * @history <<DD>> <<MON>> <<YYYY>> << DEVELOPER >> - << CHANGES DONE >>.
- *            05-01-2018 : Vinod Kumar - Logic written for first time as per given requirements for UFO Sightings App
+ *            14-01-2018 : Vinod Kumar - Updated JUnit test case for UFO Sightings App
  */
 
 package ufo.service.impl;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import ufo.dto.UfoSighting;
 import ufo.service.UfoSightingService;
-import ufo.util.CsvFileReader;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.logging.Logger;
 
 public class UfoSightingServiceImplTest {
-    private UfoSightingService ufoSightingService;
-    private CsvFileReader csvFileReader;
-    private TestDataHelper testDataHelper;
+    private static Logger logger = Logger.getLogger("UfoSightingServiceImplTest");
+    private UfoSightingService service = null;
 
     @Before
-    public void setUp() throws Exception {
-        ufoSightingService = Mockito.mock(UfoSightingServiceImpl.class);
-        csvFileReader = Mockito.mock(CsvFileReader.class);
-        testDataHelper = new TestDataHelper();
+    public void initService() {
+        try {
+            service = new UfoSightingServiceImpl(new BufferedReader(new FileReader("../mysolution/src/main/resources/ufo_awesome.tsv")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    public void testGetAllSightings(){
+    public void verifyAllSightings_WithNoInputCondition() {
         //Given
-        List<UfoSighting> ufoSightingList = testDataHelper.getSightingsList();
+        int expectedNoOfSightings=61391;
 
         //When
-        Mockito.when(ufoSightingService.getAllSightings()).thenReturn(ufoSightingList);
+        int actualNoOfSightings = service.getAllSightings().size();
+        logger.info("Total Sightings returned:"+actualNoOfSightings);
 
         //Then
-        assertNotNull(ufoSightingList);
+        Assert.assertNotNull(service.getAllSightings());
+        Assert.assertTrue(actualNoOfSightings == expectedNoOfSightings);
     }
 
     @Test
-    public void testSearchSightings_WhenYearAndMonthIsGivenAsInput(){
+    public void verifySearchSightings_WithYearAndMonthAsInputCondition() {
         //Given
-        List<UfoSighting> ufoSightingList = testDataHelper.getSightingsList();
-        int yearSeen = 2018;
-        int monthSeen = 01;
+        int yearSeen = 1995;
+        int monthSeen = 10;
+        int expectedNoOfSightings=107;
 
         //When
-        Mockito.when(ufoSightingService.search(yearSeen, monthSeen)).thenReturn(ufoSightingList);
+        int actualNoOfSightings = service.search(yearSeen, monthSeen).size();
+        logger.info("Total Sightings returned:"+actualNoOfSightings);
 
         //Then
-        assertEquals(ufoSightingList.size(), 2);
+        Assert.assertNotNull(service.getAllSightings());
+        Assert.assertTrue(actualNoOfSightings == expectedNoOfSightings);
     }
 }

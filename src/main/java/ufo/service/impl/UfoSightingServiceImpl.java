@@ -14,7 +14,6 @@ package ufo.service.impl;
 
 import ufo.dto.UfoSighting;
 import ufo.service.UfoSightingService;
-import ufo.util.CsvFileReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,41 +23,30 @@ import java.util.logging.Logger;
 
 public class UfoSightingServiceImpl implements UfoSightingService {
     private static Logger logger = Logger.getLogger("UfoSightingServiceImpl");
-    private static String cvsSplitBy = "\t";
+    private static final String delimiter = "\t";
+    private BufferedReader bufferedReader;
+
+    public UfoSightingServiceImpl(BufferedReader bufferedReader) {
+        this.bufferedReader = bufferedReader;
+    }
 
     public List<UfoSighting> getAllSightings() {
         logger.info("Entering getAllSightings@UfoSightingServiceImpl");
-        BufferedReader bufferedReader = null;
-        String line = "";
-        UfoSighting ufoSighting = null;
         List<UfoSighting> ufoSightingList = null;
-        String dateSeen = null;
-        String dateReported = null;
+        String line;
         try {
-            bufferedReader = CsvFileReader.getCSVFileBufferedReader();
-            if (null != bufferedReader) {
-                logger.info("CSV file read successfully");
+            if (null != this.bufferedReader) {
                 ufoSightingList = new ArrayList<UfoSighting>();
-                while ((line = bufferedReader.readLine()) != null) {
-                    // use tab as separator
-                    String[] dataObject = line.split(cvsSplitBy);
-                    dateSeen = dataObject[0];
-                    dateReported = dataObject[1];
-                    //ufoSighting = new UfoSighting(dateSeen, dateReported, placeSeen, shape, duration, description);
-                    ufoSighting = new UfoSighting(dateSeen, dateReported, null, null, null, null);
-                    ufoSightingList.add(ufoSighting);
+                while ((line = this.bufferedReader.readLine()) != null) {
+                    String[] dataObject = line.split(delimiter);
+                    if (dataObject.length >= 6) {
+                        ufoSightingList.add(new UfoSighting(dataObject[0], dataObject[1], dataObject[2], dataObject[3], dataObject[4], dataObject[5]));
+                    }else
+                        logger.info("Invalid UfoSightings at line#"+line);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         logger.info("Exiting getAllSightings@UfoSightingServiceImpl");
         return ufoSightingList;
@@ -66,45 +54,21 @@ public class UfoSightingServiceImpl implements UfoSightingService {
 
     public List<UfoSighting> search(int yearSeen, int monthSeen) {
         logger.info("Entering search@UfoSightingServiceImpl");
-        BufferedReader bufferedReader = null;
-        String line = "";
-        UfoSighting ufoSighting = null;
         List<UfoSighting> ufoSightingList = null;
-        String dateSeen = null;
-        String dateReported = null;
-        String pattern = Integer.toString(yearSeen) + Integer.toString(monthSeen);
-        boolean patternMatched = false;
+        String line;
         try {
-            bufferedReader = CsvFileReader.getCSVFileBufferedReader();
-            if (null != bufferedReader) {
-                logger.info("CSV file read successfully");
+            if (null != this.bufferedReader) {
                 ufoSightingList = new ArrayList<UfoSighting>();
-                while ((line = bufferedReader.readLine()) != null) {
-                    // use tab as separator
-                    String[] dataObject = line.split(cvsSplitBy);
-                    dateSeen = dataObject[0];
-                    if (null != dateSeen && dateSeen.startsWith(pattern)) {
-                        patternMatched = true;
+                while ((line = this.bufferedReader.readLine()) != null) {
+                    String[] dataObject = line.split(delimiter);
+                    String dateSeen = dataObject[0];
+                    if (dataObject.length >= 6 && null != dateSeen && dateSeen.startsWith(Integer.toString(yearSeen) + Integer.toString(monthSeen))) {
+                        ufoSightingList.add(new UfoSighting(dateSeen, dataObject[1], dataObject[2], dataObject[3], dataObject[4], dataObject[5]));
                     }
-                    dateReported = dataObject[1];
-                    ufoSighting = new UfoSighting(dateSeen, dateReported, null, null, null, null);
-                    if (patternMatched) {
-                        ufoSightingList.add(ufoSighting);
-                    }
-                    patternMatched = false;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         logger.info("Exiting search@UfoSightingServiceImpl");
         return ufoSightingList;
