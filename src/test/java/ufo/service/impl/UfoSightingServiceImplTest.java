@@ -1,7 +1,7 @@
 /**
  * FILE		    :	UFO Sightings
  * Author		:	Vinod Kumar Nair (WIPRO)
- * Purpose	    :	This is a main entry Test class which will be used to test the following implementation methods of UfoSightings :-
+ * Purpose	    :	This is the main entry Test class which will be used to test the functionality of following UfoSightings' methhods :-
  *                    (a) Get all sightings result from given csv file
  *                    (b) Get specific sightings result based on given inputs as Year & Month
  * Date Created :	14-01-2018

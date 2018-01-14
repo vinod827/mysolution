@@ -42,7 +42,7 @@ public class UfoSightingServiceImpl implements UfoSightingService {
                     if (dataObject.length >= 6) {
                         ufoSightingList.add(new UfoSighting(dataObject[0], dataObject[1], dataObject[2], dataObject[3], dataObject[4], dataObject[5]));
                     }else
-                        logger.info("Invalid UfoSightings at line#"+line);
+                        logger.info("Invalid UfoSightings: "+line);
                 }
             }
         } catch (IOException e) {
