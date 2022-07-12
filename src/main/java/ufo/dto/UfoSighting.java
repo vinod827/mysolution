@@ -29,6 +29,7 @@ public class UfoSighting {
 	}
 
 	public String getDescription() {
+		
 		return description;
 	}
 
