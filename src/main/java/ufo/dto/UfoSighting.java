@@ -18,6 +18,7 @@ public class UfoSighting {
 
 	public String getPlaceSeen() {
 		return placeSeen;
+		
 	}
 
 	public String getShape() {
@@ -29,7 +30,7 @@ public class UfoSighting {
 	}
 
 	public String getDescription() {
-		
+
 		return description;
 	}
 
