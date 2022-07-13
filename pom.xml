@@ -5,9 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lloyds.codingtest</groupId>
-    <artifactId>ufo-sighting</artifactId>
+    <artifactId>mysolution</artifactId>
     <version>1.0</version>
 
+             <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <sonar.organization>vinodkumar827</sonar.organization>
+    </properties>
+         
     <dependencies>
         <dependency>
             <groupId>commons-io</groupId>
